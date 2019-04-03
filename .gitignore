@@ -1,7 +1,19 @@
 # Compiled class file
 *.class
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
 
-# Log file
+bin/
+out/
+target/
+build/
+.settings/
+*.classpath
+*.project
+*.DS_Store
+
+# log Files #
+logs/
 *.log
 
 # BlueJ files
@@ -19,5 +31,12 @@
 *.tar.gz
 *.rar
 
+# idea
+.idea/
+*.iml
+# mpeltonen/sbt-idea plugin
+.idea_modules/
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
