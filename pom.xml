@@ -4,19 +4,28 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.nbone.spring.boot</groupId>
-	<artifactId>nbone-spring-boot-starter</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<artifactId>nbone-spring-boot-project</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
 
-	<parent>
+    <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.13.RELEASE</version>
+		<version>1.5.18.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
+	<modules>
+		<module>nbone-spring-boot</module>
+		<module>nbone-spring-boot-starter</module>
+		<module>spring-boot-starter-rabbitmq</module>
+        <module>spring-boot-starter-actuator</module>
+    </modules>
 	
 	 <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<project.build.source.version>1.8</project.build.source.version>
+		<project.build.target.version>1.8</project.build.target.version>
         <java.version>1.8</java.version>
     </properties>
 
@@ -46,6 +55,18 @@
 			<artifactId>dubbo-spring-boot-starter</artifactId>
 			<version>2.0.0</version>
 		</dependency>-->
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>caffeine</artifactId>
+			<version>2.3.5</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.github.ben-manes.caffeine</groupId>
+			<artifactId>guava</artifactId>
+			<version>2.3.5</version>
+			<optional>true</optional>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -68,6 +89,7 @@
 			<groupId>org.nbone</groupId>
 			<artifactId>nbone-core</artifactId>
 			<version>1.1.1-SNAPSHOT</version>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.nbone</groupId>
@@ -80,6 +102,17 @@
 
 	<build>
 		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>${project.build.source.version}</source>
+					<target>${project.build.target.version}</target>
+					<encoding>UTF-8</encoding>
+					<verbose>thinking</verbose>
+				</configuration>
+			</plugin>
+
 			<!-- 要将源码放上去，需要加入这个插件 -->
 			<plugin>
 				<artifactId>maven-source-plugin</artifactId>
@@ -101,6 +134,7 @@
 	</build>
 
 
+	<!--Maven私服配置 -->
 	<distributionManagement>
 		<!--<repository>
 			<id>releases</id>

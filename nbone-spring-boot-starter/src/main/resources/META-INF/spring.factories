@@ -1,0 +1,6 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.nbone.spring.boot.autoconfigure.validation.ValidationAutoConfiguration,\
+org.nbone.spring.boot.autoconfigure.cache.CaffeineCacheConfiguration,\
+org.nbone.spring.boot.autoconfigure.cache.GuavaCacheConfiguration
+

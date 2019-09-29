@@ -1,0 +1,8 @@
+# AutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.nbone.spring.boot.autoconfigure.amqp.RabbitAutoConfiguration
+
+# Environment Post Processors
+org.springframework.boot.env.EnvironmentPostProcessor=\
+org.nbone.spring.boot.autoconfigure.amqp.RabbitEnvironmentPostProcessor
+
