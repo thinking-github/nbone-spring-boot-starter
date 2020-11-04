@@ -28,7 +28,7 @@ import java.util.Map;
  * @since 2019-09-28
  */
 @RestController
-@RequestMapping("${management.context-path:}")
+@RequestMapping(value = "${management.context-path:}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class RedisEndpoint implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(RedisEndpoint.class);
@@ -41,7 +41,7 @@ public class RedisEndpoint implements InitializingBean {
     private Map<String, Object> hash;
 
 
-    @RequestMapping(value = "redis", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "redis", method = RequestMethod.GET)
     public Map<String, Object> getRedisPool(HttpServletRequest request) {
         if (hash == null) {
             hash = new LinkedHashMap<>();

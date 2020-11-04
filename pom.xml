@@ -6,12 +6,12 @@
 	<groupId>org.nbone.spring.boot</groupId>
 	<artifactId>nbone-spring-boot-project</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>${revision}</version>
 
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.18.RELEASE</version>
+		<version>1.5.19.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<modules>
@@ -20,17 +20,27 @@
 		<module>spring-boot-starter-rabbitmq</module>
         <module>spring-boot-starter-actuator</module>
     </modules>
-	
-	 <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.build.source.version>1.8</project.build.source.version>
 		<project.build.target.version>1.8</project.build.target.version>
-        <java.version>1.8</java.version>
-    </properties>
+		<java.version>1.8</java.version>
+		<nbone.version>1.0.0.RELEASE</nbone.version>
+		<revision>1.0.1-SNAPSHOT</revision>
+	</properties>
 
 
-
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.nbone.spring.boot</groupId>
+				<artifactId>nbone-spring-boot</artifactId>
+				<version>${revision}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -88,13 +98,13 @@
 		<dependency>
 			<groupId>org.nbone</groupId>
 			<artifactId>nbone-core</artifactId>
-			<version>1.1.1-SNAPSHOT</version>
+			<version>${nbone.version}</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.nbone</groupId>
 			<artifactId>nbone-framework</artifactId>
-			<version>1.1.1-SNAPSHOT</version>
+			<version>${nbone.version}</version>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
@@ -125,6 +135,26 @@
 						<phase>package</phase>
 						<goals>
 							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!--优化、压缩发布的pom文件-->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>flatten-maven-plugin</artifactId>
+				<version>1.0.1</version>
+				<configuration>
+					<updatePomFile>true</updatePomFile>
+					<outputDirectory>target</outputDirectory>
+					<flattenMode>ossrh</flattenMode>
+				</configuration>
+				<executions>
+					<execution>
+						<id>flatten</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>flatten</goal>
 						</goals>
 					</execution>
 				</executions>
@@ -162,7 +192,55 @@
 
 	</distributionManagement>
 
-
-
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.0.1</version>
+						<configuration>
+							<charset>UTF-8</charset>
+							<encoding>UTF-8</encoding>
+							<doclint>none</doclint>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<version>1.6</version>
+						<executions>
+							<execution>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			<distributionManagement>
+				<snapshotRepository>
+					<id>nbone-sonatype</id>
+					<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+				</snapshotRepository>
+				<repository>
+					<id>nbone-sonatype</id>
+					<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+				</repository>
+			</distributionManagement>
+		</profile>
+	</profiles>
 
 </project>

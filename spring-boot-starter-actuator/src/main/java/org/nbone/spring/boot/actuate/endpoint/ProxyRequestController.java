@@ -23,7 +23,7 @@ import java.util.concurrent.Executors;
  * @since 2019-09-28
  */
 @RestController
-@RequestMapping(value = "${management.context-path:}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/nbone", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class ProxyRequestController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProxyRequestController.class);
