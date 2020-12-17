@@ -28,7 +28,7 @@
 		<project.build.target.version>1.8</project.build.target.version>
 		<java.version>1.8</java.version>
 		<nbone.version>1.0.0.RELEASE</nbone.version>
-		<revision>1.0.1-SNAPSHOT</revision>
+		<revision>1.0.0-SNAPSHOT</revision>
 	</properties>
 
 

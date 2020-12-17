@@ -26,6 +26,12 @@
             <artifactId>jedis</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.2.4</version>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
 
