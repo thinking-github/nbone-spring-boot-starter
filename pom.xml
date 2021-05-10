@@ -11,7 +11,7 @@
     <parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.19.RELEASE</version>
+		<version>1.5.22.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<modules>
@@ -19,6 +19,7 @@
 		<module>nbone-spring-boot-starter</module>
 		<module>spring-boot-starter-rabbitmq</module>
         <module>spring-boot-starter-actuator</module>
+        <module>spring-boot-starter-config</module>
     </modules>
 
 	<properties>
@@ -166,27 +167,15 @@
 
 	<!--Maven私服配置 -->
 	<distributionManagement>
-		<!--<repository>
-			<id>releases</id>
-			<name>Releases</name>
-			<url>https://ac.chainnova.com/nexus/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>Snapshots</name>
-			<url>https://ac.chainnova.com/nexus/content/repositories/snapshots/</url>
-			<layout>default</layout>
-		</snapshotRepository>-->
-
 		<repository>
 			<id>releases</id>
 			<name>Releases</name>
-			<url>http://public-maven.apuscn.com/nexus/content/repositories/releases/</url>
+			<url>${maven.releases.url}</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
 			<name>Snapshots</name>
-			<url>http://public-maven.apuscn.com/nexus/content/repositories/snapshots/</url>
+			<url>${maven.snapshots.url}</url>
 			<layout>default</layout>
 		</snapshotRepository>
 

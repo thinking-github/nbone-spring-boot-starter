@@ -1,0 +1,6 @@
+# Auto Configure
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+org.nbone.spring.boot.autoconfigure.jdbc.DynamicDataSourceAutoConfiguration,\
+org.nbone.spring.boot.autoconfigure.log.DynamicLogAutoConfiguration,\
+org.nbone.spring.boot.autoconfigure.task.DynamicTaskAutoConfiguration
+
