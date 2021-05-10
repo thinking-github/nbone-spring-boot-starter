@@ -1,4 +1,6 @@
 # Auto Configure
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.nbone.spring.boot.actuate.autoconfigure.EndpointAutoConfiguration
+org.nbone.spring.boot.actuate.autoconfigure.EndpointAutoConfiguration,\
+org.nbone.spring.boot.actuate.autoconfigure.metrics.jdbc.ShardingDataSourceMetricsAutoConfiguration
+
 
