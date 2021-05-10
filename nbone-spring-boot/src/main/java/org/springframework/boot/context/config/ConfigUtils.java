@@ -1,6 +1,7 @@
 package org.springframework.boot.context.config;
 
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.EnumerablePropertySource;
 import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 
@@ -14,6 +15,8 @@ public class ConfigUtils {
     public static final String SOURCE_NAME = ConfigFileApplicationListener.APPLICATION_CONFIGURATION_PROPERTY_SOURCE_NAME;
 
     /**
+     * commandLineArgs -> systemProperties-> systemEnvironment-> applicationConfigurationProperties
+     * <p>
      * 判断  application Configuration Properties 中是否含有某个前缀
      *
      * @param environment
@@ -22,6 +25,15 @@ public class ConfigUtils {
      */
     public static boolean containsPrefix(ConfigurableEnvironment environment, String prefix) {
         MutablePropertySources mutablePropertySources = environment.getPropertySources();
+
+        for (PropertySource<?> propertySource : mutablePropertySources) {
+            if (propertySource instanceof EnumerablePropertySource) {
+                String[] names = ((EnumerablePropertySource) propertySource).getPropertyNames();
+                if (containsPrefix(names, prefix)) {
+                    return true;
+                }
+            }
+        }
 
         PropertySource<?> source = mutablePropertySources.get(SOURCE_NAME);
         if (source instanceof ConfigFileApplicationListener.ConfigurationPropertySources) {
