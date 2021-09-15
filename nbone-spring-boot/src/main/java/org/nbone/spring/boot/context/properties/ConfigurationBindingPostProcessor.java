@@ -13,6 +13,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.PropertySources;
 import org.springframework.util.ClassUtils;
@@ -20,7 +21,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.Validator;
 
 /**
- * 将spring配置文件装换成实体类
+ * 将spring配置文件装换成实体类,支持覆盖 properties prefix
  *
  * @author thinking
  * @version 1.0
@@ -79,17 +80,52 @@ public class ConfigurationBindingPostProcessor implements BeanFactoryAware, Envi
     @Override
     public void setEnvironment(Environment environment) {
         this.environment = environment;
+        if (environment instanceof ConfigurableEnvironment) {
+            ConfigurableEnvironment env = (ConfigurableEnvironment) environment;
+            if (this.conversionService == null) {
+                this.conversionService = env.getConversionService();
+            }
+            if (this.propertySources == null) {
+                this.propertySources = env.getPropertySources();
+            }
+        }
     }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-
+        this.applicationContext = applicationContext;
+        if (this.environment == null) {
+            this.environment = applicationContext.getEnvironment();
+        }
     }
 
+    /**
+     * new add function
+     *
+     * @param environment
+     * @param clazz  Configuration Properties target class
+     * @param prefix  properties prefix
+     * @param <T>
+     * @return
+     * @throws BeansException
+     */
+    public <T> T postProcessBind(final Environment environment, Class<T> clazz, String prefix) throws BeansException {
+        // TODO:
+        throw new UnsupportedOperationException();
+    }
+    /**
+     * new add function
+     * @param clazz  Configuration Properties target class
+     * @param prefix properties prefix
+     * @param <T>
+     * @return
+     * @throws BeansException
+     */
     public <T> T postProcessBind(Class<T> clazz,String prefix) throws BeansException {
        T bean = BeanUtils.instantiate(clazz);
         return (T) postProcessBind(bean,prefix);
     }
+    // new add
     public Object postProcessBind(Object bean,String prefix) throws BeansException {
         ConfigurationProperties annotation = AnnotationUtils.findAnnotation(bean.getClass(), ConfigurationProperties.class);
         if (annotation != null) {
@@ -119,6 +155,7 @@ public class ConfigurationBindingPostProcessor implements BeanFactoryAware, Envi
         Object target = bean;
         PropertiesConfigurationFactory<Object> factory = new PropertiesConfigurationFactory<Object>(target);
         factory.setPropertySources(this.propertySources);
+        factory.setApplicationContext(this.applicationContext);
         //factory.setValidator(determineValidator(bean));
         // If no explicit conversion service is provided we add one so that (at least)
         // comma-separated arrays of convertibles can be bound automatically
